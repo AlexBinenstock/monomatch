@@ -1,25 +1,17 @@
 <script>
-  let cards = [];
-  let iconCount = 57;
-  let secretNums = [0, 1, 3, 13, 32, 36, 43, 52];
-
-  // create empty deck of cards
-  for (let i = 0; i < iconCount; i++) {
-    cards.push([]);
-  }
-
-  for (let i = 0; i < iconCount; i++) {
-    if (secretNums.includes(i)) {
-      cards[i].push(i);
-    }
-  }
+  import { createDeck } from "../helpers/deckHelpers";
+  let cards = createDeck();
 </script>
 
 <main>
   <h1>Duplici</h1>
-  {#each cards as card}
-    <div class="card">{card}</div>
-  {/each}
+  <div class="card-container">
+    {#each cards as card}
+      <div class="card">
+        <div class="card-content">{card.toString()}</div>
+      </div>
+    {/each}
+  </div>
 </main>
 
 <style>
@@ -37,6 +29,14 @@
     font-weight: 100;
   }
 
+  .card-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow-wrap: break-word;
+  }
+
   .card {
     height: 100px;
     width: 100px;
@@ -45,6 +45,16 @@
     border-radius: 100px;
     display: inline-block;
     margin: 5px;
+  }
+
+  .card-content {
+    height: 100px;
+    width: 100px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    overflow-wrap: break-word;
   }
 
   @media (min-width: 640px) {
