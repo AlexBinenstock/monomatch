@@ -1,32 +1,65 @@
 <script>
-  import { createDeck } from "../helpers/deckHelpers";
-  let cards = createDeck();
+  import Card from "./components/card.svelte";
+  import GameBar from "./components/gameBar.svelte";
+  import GameZone from "./components/gameZone.svelte";
+  import PlayerZone from "./components/playerZone.svelte";
+  import { deck, gameStack } from "./stores.js";
+
 </script>
 
-<main>
-  <h1>Duplici</h1>
+<div class="title">
+  <h1>Dup&#8239;lici   
+    <span class="dup">p</span>
+  </h1>
+</div>
+<GameBar />
+{#if $gameStack.length > 0}
+<!-- game zone -->
+<GameZone gameStack = {$gameStack} />
+<!-- player zone -->
+<PlayerZone deck = {$deck} />
+{:else}
   <div class="card-container">
-    {#each cards as card}
-      <div class="card">
-        <div class="card-content">{card.toString()}</div>
-      </div>
+    {#each $deck as card}
+      <Card {card} />
     {/each}
   </div>
-</main>
+{/if}
 
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
+<style lang="scss">
+  @keyframes slideAndFade {
+    from {
+      left: 85px;
+      top: 0px;
+    }
+    to {
+      left: 95px;
+      top: -10px;
+    }
   }
 
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h1 {
+      color: #ff3e00;
+      text-transform: uppercase;
+      font-size: 4em;
+      font-weight: 100;
+      position: relative;
+      display: inline-block;
+    }
+    .dup {
+      position: absolute;
+      left: 85px;
+      top: 0px;
+    }
+    &:hover {
+      & .dup {
+        animation: slideAndFade 0.5s forwards;
+      }
+    }
   }
 
   .card-container {
@@ -35,31 +68,5 @@
     justify-content: space-between;
     flex-wrap: wrap;
     overflow-wrap: break-word;
-  }
-
-  .card {
-    height: 100px;
-    width: 100px;
-    border: 5px solid rgb(24, 24, 24);
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.281);
-    border-radius: 100px;
-    display: inline-block;
-    margin: 5px;
-  }
-
-  .card-content {
-    height: 100px;
-    width: 100px;
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 50%;
-    overflow-wrap: break-word;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
   }
 </style>
