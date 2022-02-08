@@ -1,11 +1,11 @@
 <script>
     import Card from "./card.svelte";
-    export let deck = [];
+    import { deck } from "../stores.js"
 </script>
 
 <div class="player-zone">
-    {#each Array(3) as _, i}
-        <Card isGameCard={false} card={deck[i]} />
+    {#each Array(3) as _, i ($deck[i].cardId)}
+        <Card isGameCard={false} card={$deck[i]}/>
     {/each}
 </div>
   

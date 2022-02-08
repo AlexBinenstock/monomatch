@@ -9,23 +9,24 @@ export const createPlayer = ({name, id }) => {
     
   };
 
-  export const checkMatch = () => {
+//   export const isMatch = (playerIcon, gameIcon) => {
 
-    // //if playericon and game icon match
-    // if (playerSelectedIcon.icon === gameSelectedIcon.icon) {
+//     //if playericon and game icon match
+//     if (playerIcon && playerIcon === gameIcon) {
         
-    //     //move to top of game stack
-    //     gameStack.update( gStack => {
-    //         return [deck[0], ...gStack]
-    //     });
+//         //move to top of game stack
+//         gameStack.update( gStack => {
+//             return [deck[0], ...gStack]
+//         });
         
-    //     //take card out of stack
-    //     deck.update( nDeck => {
-    //         return removeTopCard(nDeck);
-    //     });
-    // }
-
-  }
+//         //take card out of stack
+//         deck.update( nDeck => {
+//             return removeTopCard(nDeck);
+//         });
+//         return true;
+//     }
+//     return false;
+//   }
 
   export const removeTopCard = (cards) => {
     cards.shift();

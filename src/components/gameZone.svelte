@@ -1,10 +1,10 @@
 <script>
     import Card from "./card.svelte";
-    export let gameStack = [];
+    import { gameStack } from "../stores.js"
 </script>
 
 <div class="game-zone">
-    <Card isGameCard={true} card={gameStack[gameStack.length - 1]} />
+    <Card isGameCard={true} card={$gameStack[0]} />
 </div>
   
     

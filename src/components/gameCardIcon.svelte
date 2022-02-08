@@ -1,22 +1,43 @@
 <script>
-    import {gameSelectedIcon} from "../stores.js"
-    import {checkMatch} from "../helpers/playerHelpers.js"
+    import {
+        gameSelectedIcon,
+        playerSelectedIcon,
+        gameStack,
+        deck,
+    } from "../stores.js";
     export let iconObj = {};
 
     function handleClick() {
-        if (iconObj?.symbol === $gameSelectedIcon) {
+        if (iconObj?.symbol === $gameSelectedIcon?.symbol) {
             $gameSelectedIcon = null;
             return;
         }
-        
+
         $gameSelectedIcon = iconObj;
 
-        checkMatch();
-	}
-
+        if ($gameSelectedIcon?.icon === $playerSelectedIcon?.icon) {
+            //add the players card to the top of the stack
+            const cardToMove = $deck.find(card => card.cardId === $playerSelectedIcon.cardId);
+            $gameStack = [cardToMove, ...$gameStack];
+            //remove the user's card from their deck
+            let updatedDeck = $deck.filter((card) => {
+                return card.cardId !== $playerSelectedIcon.cardId;
+            });
+            $deck = [...updatedDeck];
+            //clear the selections
+            $gameSelectedIcon = null;
+            $playerSelectedIcon = null;
+            setTimeout(() => jdenticon(), 0.1);
+        }
+    }
 </script>
 
-<svg on:click="{handleClick}" class="card-icon {$gameSelectedIcon?.symbol === iconObj?.symbol && 'selected'}" data-jdenticon-value="{iconObj.icon}"></svg>    
+<svg
+    on:click={handleClick}
+    class="card-icon {$gameSelectedIcon?.symbol === iconObj?.symbol &&
+        'selected'}"
+    data-jdenticon-value={iconObj.icon}
+/>
 
 <style lang="scss">
     @keyframes rotation {
@@ -29,19 +50,19 @@
     }
 
     .card-icon {
-        cursor:pointer;
+        cursor: pointer;
         animation: rotation 10s infinite linear;
         width: 7.5vw;
-        height:7.5vw;
-        padding: .75vw;
+        height: 7.5vw;
+        padding: 0.75vw;
         filter: drop-shadow(1px 1px 1px #000000);
         &:hover {
-            filter: drop-shadow(3px 3px 3px #ff8860);
+            filter: drop-shadow(1px 1px 1px #ff8860);
         }
         &:active {
-            filter: drop-shadow(7px 7px 7px #93f2ff);
+            filter: drop-shadow(1px 1px 1px #93f2ff);
         }
-        &.selected{
+        &.selected {
             filter: drop-shadow(1px 1px 10px #00b900);
         }
     }

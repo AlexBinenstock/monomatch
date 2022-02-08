@@ -5,7 +5,7 @@ export const newDeck = () => {
   let uniqueModifier = Math.floor(Math.random() * 1000);
   // create empty deck of cards
   for (let i = 0; i < iconCount; i++) {
-    deck.push([]);
+    deck.push({ icons: [], cardId: i });
   }
 
   for (let currentIcon = 0; currentIcon < iconCount; currentIcon++) {
@@ -15,15 +15,22 @@ export const newDeck = () => {
         if (cardToStamp >= iconCount) {
           cardToStamp %= 57;
         }
-        deck[cardToStamp].push({icon: currentIcon + uniqueModifier + " ", symbol: Symbol()});
+        deck[cardToStamp].icons.push({ icon: currentIcon + uniqueModifier, symbol: Symbol(), cardId: cardToStamp });
       }
     }
   }
+
+  deck.map((card) => {
+    // jumble the icons
+    card.icons = shuffle(card.icons);
+    return card;
+  });
+  // jumble the deck.
   return shuffle(deck);
 };
 
 export const shuffle = (deck) => {
-  let currentIndex = deck.length,  randomIndex;
+  let currentIndex = deck.length, randomIndex;
 
   // While there remain elements to shuffle...
   while (currentIndex != 0) {

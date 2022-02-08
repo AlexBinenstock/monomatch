@@ -1,22 +1,25 @@
 <script>
     import PlayerCardIcon from "./PlayercardIcon.svelte"
-    import { shuffle } from "../helpers/deckHelpers";
     import GameCardIcon from "./gameCardIcon.svelte";
-    export let card = [];
+    export let card = {};
     export let isGameCard = false;
     //make sure our icons aren't in the same order on every card.
-    card = shuffle(card);
 </script>
 
     <div class={isGameCard ? "game-card card" : "card"}>
+        {@debug card}
         <div class="card-content">
-            {#each card as iconObj}
+            {#each card.icons as iconObj (iconObj.symbol)}
                 {#if isGameCard}
                     <GameCardIcon iconObj={iconObj} />
                 {:else}
                     <PlayerCardIcon iconObj={iconObj} />
                 {/if}
             {/each}
+
+            <span class="card-id">
+                {card.cardId}
+            </span>
         </div>
     </div>
     
@@ -30,6 +33,14 @@
         border-radius: 1vw;
         display: inline-block;
         margin: 5px;
+        transition: all ease-in-out;
+    }
+
+    .card-id {
+        position: relative;
+        top: 65px;
+        left: 0;
+        width: 0;
     }
 
     @keyframes rainbow{
