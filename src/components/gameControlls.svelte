@@ -14,7 +14,7 @@
     }
 
     function handleAddPlayer() {
-        alert(`coming soon`);
+        alert(`WIP`);
     }
 </script>
 

@@ -4,7 +4,7 @@
 </script>
 
 <div class="game-zone">
-    <Card isGameCard={true} card={$gameStack[0]} />
+    <Card playerCardPosition={null} card={$gameStack[0]} />
 </div>
   
     
@@ -14,5 +14,5 @@
         display: flex;
         align-items: center;
         justify-content: center;
-}
+    }
 </style>

@@ -26,6 +26,7 @@ export const newDeck = () => {
     return card;
   });
   // jumble the deck.
+  deck.length = 5;
   return shuffle(deck);
 };
 

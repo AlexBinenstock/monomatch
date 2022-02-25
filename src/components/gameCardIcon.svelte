@@ -16,6 +16,12 @@
         $gameSelectedIcon = iconObj;
 
         if ($gameSelectedIcon?.icon === $playerSelectedIcon?.icon) {
+
+            //
+
+
+
+
             //add the players card to the top of the stack
             const cardToMove = $deck.find(card => card.cardId === $playerSelectedIcon.cardId);
             $gameStack = [cardToMove, ...$gameStack];

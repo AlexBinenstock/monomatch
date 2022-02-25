@@ -4,29 +4,51 @@
   import GameZone from "./components/gameZone.svelte";
   import PlayerZone from "./components/playerZone.svelte";
   import { deck, gameStack, score } from "./stores.js";
-
-
 </script>
-<GameBar />
-<div class="title">
-  <h1>Dup&#8239;lici   
-    <span class="dup">p</span>
-  </h1>
-</div>
-<div class="player-info">
-  <!-- <span class='score'>Score: {$score}</span> -->
-  <span class='cards-remaining'>Cards Remaining: {$deck.length}</span>
-</div>
+
 {#if $gameStack.length > 0}
-<!-- game zone -->
-<GameZone/>
-<!-- player zone -->
-<PlayerZone/>
+  {#if $deck.length > 0}
+    <GameBar />
+    <div class="title">
+      <h1>
+        Dup&#8239;lici
+        <span class="dup">p</span>
+      </h1>
+    </div>
+    <div class="player-info">
+      <!-- <span class='score'>Score: {$score}</span> -->
+      <span class="cards-remaining">Cards Remaining: {$deck.length}</span>
+    </div>
+    <!-- game zone -->
+    <GameZone />
+    <!-- player zone -->
+    <PlayerZone />
+  {:else}
+    <h1>You Win!</h1>
+  {/if}
 {:else}
-  <div class="card-container">
-    <Card card={$deck[0]} />
-    <Card card={$deck[1]} />
-    <Card card={$deck[2]} />
+  <div class="home-container">
+    <GameBar />
+    <div class="title">
+      <h1>
+        Dup&#8239;lici
+        <span class="dup">p</span>
+      </h1>
+    </div>
+    <div class="banner">
+      {#each Array(10) as _, i}
+        <svg width="10%" data-jdenticon-value={i} />
+      {/each}
+    </div>
+    <div class="instructions">
+      <h1>Match icons from your cards with the game card in the center.</h1>
+      <h2>Win the game by getting rid of all your cards the fastest.</h2>
+    </div>
+    <div class="banner">
+      {#each Array(50) as _, i}
+        <svg width="10%" data-jdenticon-value={i + 20} />
+      {/each}
+    </div>
   </div>
 {/if}
 
@@ -35,6 +57,38 @@
     display: flex;
     justify-content: end;
     align-items: center;
+  }
+
+  .instructions {
+    padding: 0 20px;
+  }
+
+  .home-container {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 8px 8px 0;
+  }
+
+  .banner {
+    @for $i from 1 through 60 {
+      svg:nth-child(#{$i}) {
+        opacity: 0.75 - $i * 0.015;
+      }
+    }
+  }
+
+  .banner {
+    &:first-child {
+      padding: 20px 0;
+    }
+    width: 100%;
+    padding: 20px 0 0 0;
+    margin: 0;
+    position: relative;
   }
 
   @keyframes reverse {
@@ -70,15 +124,15 @@
       font-weight: 300;
       position: relative;
       display: inline-block;
-      user-select: none; 
-      margin:10px 0 25px;
+      user-select: none;
+      margin: 10px 0 25px;
       cursor: pointer;
     }
     .dup {
       position: absolute;
       left: 85px;
       top: 0px;
-      user-select: none; 
+      user-select: none;
       cursor: pointer;
       animation: reverse 0.5s forwards;
     }
