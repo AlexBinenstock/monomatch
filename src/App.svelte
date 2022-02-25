@@ -4,6 +4,7 @@
   import GameZone from "./components/gameZone.svelte";
   import PlayerZone from "./components/playerZone.svelte";
   import { deck, gameStack, score } from "./stores.js";
+  let random = Math.floor(Math.random() * 1000)
 </script>
 
 {#if $gameStack.length > 0}
@@ -37,7 +38,7 @@
     </div>
     <div class="banner">
       {#each Array(10) as _, i}
-        <svg width="10%" data-jdenticon-value={i} />
+        <svg width="10%" data-jdenticon-value={i + random } />
       {/each}
     </div>
     <div class="instructions">
@@ -46,7 +47,7 @@
     </div>
     <div class="banner">
       {#each Array(50) as _, i}
-        <svg width="10%" data-jdenticon-value={i + 20} />
+        <svg width="10%" data-jdenticon-value={i + random + 10} />
       {/each}
     </div>
   </div>
